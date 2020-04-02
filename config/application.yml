@@ -1,0 +1,45 @@
+collector:
+  scanner:
+    #### the directory to be scanned
+    path: source
+    ### scan task time expression
+    corn: 0 0/5 * * * ?
+    ### the directory to be uploaded, default: .temp
+    #temp: .temp
+    ### active scanner task, default: true
+    #active: true
+  uploader:
+    ### upload url
+    url: http://127.0.0.1:12250/file/store
+    ### interval between upload failures, unit: second, default: 10s
+    #interval-between-upload-failure: 10
+    ### maximum number of retries. When equal -1, it will always try to upload until successful. default: 10
+    #max-retry: 10
+    ### whether or not checksum, default true
+    #checksum: true
+    ### active uploader, default true
+    #active: true
+    ### uploader task executor, the default values are as follows
+#    executor:
+#      name: uploader-task
+#      core-pool-size: 5
+#      max-pool-size: 10
+#      queue-capacity: 100
+  ### restful related configuration, the default values are as follows
+#  rest:
+#    connection-timeout: 10000
+#    read-timeout: 60000
+#    proxy:
+#      active: false
+#      host:
+#      port:
+
+logging:
+  level:
+   root: info
+   org.springframework.web.client: debug
+  file:
+    name: logs/collector.log
+    max-history: 7
+    max-size: 200
+
