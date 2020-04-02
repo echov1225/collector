@@ -9,6 +9,8 @@ import org.v.th.collector.exception.CollectorException;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -41,8 +43,13 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
                if (log.isErrorEnabled()) {
                    log.error("{} upload error {} times, delay {} seconds to upload again", fe.getFile(), fe.getRetry(), delay);
                }
+               // Retry upload
                FileEvent event = new FileEvent(fe.getFile(), fe.getRetry() + 1);
-               Executors.newScheduledThreadPool(1).schedule(() -> publisher.publish(event), delay, TimeUnit.SECONDS);
+               ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+               ScheduledFuture<?> future = executor.schedule(() -> publisher.publish(event), delay, TimeUnit.SECONDS);
+               if (future.isDone()) {
+                   executor.shutdown();
+               }
            }
         }
     }
