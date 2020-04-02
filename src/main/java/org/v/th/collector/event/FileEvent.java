@@ -14,7 +14,7 @@ public class FileEvent extends ApplicationEvent {
     private int retry;
 
     public FileEvent(File file) {
-        this(file, 1);
+        this(file, 0);
     }
 
     public FileEvent(File file, int retry) {

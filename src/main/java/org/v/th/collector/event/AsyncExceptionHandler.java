@@ -35,13 +35,13 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
                        && properties.getUploader().getMaxRetry() <= fe.getRetry()) {
                    if (log.isErrorEnabled()) {
                        log.error("{}'s number of upload failures reaches the maximum {}, upload is terminated.",
-                               fe.getFile(), properties.getUploader().getMaxRetry());
+                               fe.getFile(), properties.getUploader().getMaxRetry() + 1);
                    }
                    return;
                }
-               long delay = fe.getRetry() * properties.getUploader().getIntervalBetweenUploadFailure();
+               long delay = (fe.getRetry() + 1) * properties.getUploader().getIntervalBetweenUploadFailure();
                if (log.isErrorEnabled()) {
-                   log.error("{} upload error {} times, delay {} seconds to upload again", fe.getFile(), fe.getRetry(), delay);
+                   log.error("{} upload error {} times, delay {} seconds to upload again", fe.getFile(), fe.getRetry() + 1, delay);
                }
                // Retry upload
                FileEvent event = new FileEvent(fe.getFile(), fe.getRetry() + 1);
