@@ -8,7 +8,6 @@ import org.v.th.collector.configuration.CollectorProperties;
 import org.v.th.collector.exception.CollectorException;
 
 import java.lang.reflect.Method;
-import java.sql.Time;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
