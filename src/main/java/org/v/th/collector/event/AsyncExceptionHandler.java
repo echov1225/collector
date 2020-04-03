@@ -46,7 +46,7 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
                // Retry upload
                FileEvent event = new FileEvent(fe.getFile(), fe.getRetry() + 1);
                ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-               ScheduledFuture<?> future = executor.schedule(() -> publisher.publish(event), 100, TimeUnit.MILLISECONDS);
+               ScheduledFuture<?> future = executor.schedule(() -> publisher.publish(event), delay, TimeUnit.MILLISECONDS);
                // shutdown executor service
                new Thread(() -> {
                    while (true) {
