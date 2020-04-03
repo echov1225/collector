@@ -52,6 +52,7 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
                    while (true) {
                        if(future.isDone()) {
                            executor.shutdown();
+                           break;
                        }
                    }
                }).start();
