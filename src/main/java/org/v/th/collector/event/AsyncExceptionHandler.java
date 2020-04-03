@@ -8,6 +8,7 @@ import org.v.th.collector.configuration.CollectorProperties;
 import org.v.th.collector.exception.CollectorException;
 
 import java.lang.reflect.Method;
+import java.sql.Time;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -53,6 +54,13 @@ public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
                        if(future.isDone()) {
                            executor.shutdown();
                            break;
+                       }
+                       try {
+                           TimeUnit.SECONDS.sleep(1);
+                       } catch (InterruptedException e) {
+                           if (log.isErrorEnabled()) {
+                               log.error(e.getMessage(), e);
+                           }
                        }
                    }
                }).start();
